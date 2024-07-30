@@ -17,7 +17,7 @@ w_xy = w_xy.reshape(4, 4)
 w_yz = np.array([0, 4, 7, 1, 0, 4, 3, 1, 0, 8, 3, 1, 0, 8, 7, 1])
 w_yz = w_yz.reshape(4, 4)
 
-w_coor = np.vstack(w_xy, w_xz, w_yz)    # [12, 4]
+w_coor = np.vstack((w_xz, w_xy, w_yz))    # [12, 4]
 
 # pixel coordinate
 c_xz = np.array([275, 142, 312, 454, 382, 436, 357, 134])
@@ -34,3 +34,8 @@ w_check = w_check.reshape(5, 4)
 c_check = np.array([369, 297, 531, 484, 640, 468, 646, 333, 556, 194])
 c_check = c_check.reshape(5, 2)
 
+aCamera = SingleCamera(w_coor, c_coor, 12)  # 12 points in total are used
+aCamera.composeP()
+aCamera.svdP()
+aCamera.workInAndOut()  # print computed result
+aCamera.selfcheck(w_check,c_check)  # test 5 points and verify M
